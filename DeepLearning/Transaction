@@ -1,0 +1,310 @@
+Distributed transactions for Kubernetes microservices and cloud native apps | CloudWorld 2022 
+
+Hello everyone welcome to article cloud word contin my name is the pagol I’m a senior director of product development and database of manigation and along with me I have prigation as well sprigation you in to introduce her
+
+yet’s. Hi everyone so my name is brugesh and I’m a centers in the Oracle database group and I am the product lead for this product the orical transaction manager for microservices.
+
+Welcome again. So today we are going to talk about a recol tranjection manager for microservices. 
+So this is a new product that we are implementing we have just launched
+
+and announcing for the first time in at orical cloud world and this is the agenda we are going to talk about there some challenges with the microservices application development
+
+provide an overview of the product data consistencye spectrum that we support and how simply simple it is to develop application using the product. 
+Also what flexibility as well as some rote map and a upcoming feature for the firm.
+
+So, the start with the challenges with microserviices. 
+We all know microservices are very distributed there could be tens, hundreds of microservices working in an application and each year microservice had its own database.
+
+The challenge here that we are focusing on is that data consistency across these data resources. 
+So how do you make sure that when your business transection on through the data is consistent across all the resources being used in the application and across all these microservices
+
+and one may ask that why data consistency is necessary there are various regions there are business transactions in financial applications where you are withdrawing from one account and depositing the one account attached to be an atomic transaction.
+
+Otherwise you might end up saying, there is my money I withdraw it but it’s not deposited into the account. 
+And the other account, the bank manager can say, okay I don’t know where that money I.
+
+And so issues like that might happen same thing with the supply chain or these retail business when someone is placing an order order might be placed where the payment may not be received. 
+So these kind of issues might be there and that’s why data consistency is necessary
+
+and it may also lead to customer dissatisfaction because if order is placed and payment is not down in payment is done but order is not place all those kind of things might happen and it may also lead to the legal lesson.
+
+There are various ways data consistency issue is addressed as of today manual reconcillation. 
+So this is one of isold solution and you, you do this reconstellation at the end of the day, week, month, whatever it iys and then you see data in this source whats as that source
+
+whether is consistent or now it’s very era prone it’s very time consuming it’s very costly to say the least there is the developers that are doing their own transaction management.
+
+Now, the burden is on the application developer to put tall the logic for the tranjection management infrastructure in the application that’s not a cost effective and it takes the precious time from the developers, from the business logic, to this transaction management which is not necessary.
+
+There are a few existing transaction managers out there as well but most of these transaction managers are focused not only on Java.
+
+Micro services are being developed in many different languages. 
+Jawa is just one of them and these are open sources they don’t really provide the enterprise level solution that we are aiming for.
+
+So there is a, clear need for enterprise solution to address this data consistency and especially for the microservices based application. 
+So let’s get into right in to the product that we are offering. 
+Our vision for this product is much more than data consistency. 
+We want to provide a product
+
+and that I, is that enables actually all the application developers to adopt and increase the use of microservices based architecture in their application and make it easier for them to develop and deploy such application.
+
+Data consistency is the issue that we are focusing in this first release and we are going to talk about that. 
+So what is transiction manager for microservices? We call it Micro. 
+Tx as well.
+
+So again you would heard this data consistency word again and again because that is a focus for this release of the product. 
+So transection manager for Micro service as microp it enables user of distributed tranjection
+
+to ensure that data consistency and it is specifically designed for microservices based application. 
+Now these microservices could be written in many different programming languages Java, nogs and so on.
+
+It could be running using it could be developed using different application frameworks or platforms. 
+It might be deployed in coban nities or other infrastructure where, where a microservice is running.
+
+It supports heterogeneous resource managers like orical database MI, sequel Fort test school all those kinds of resource managers could be it could be part of a distributed transaction and then I could also
+
+utilize existing services or application in the same exit transaction. 
+So microservices don’t have to operate in the silo sotu spi. 
+And in order to do that, what we are introducing is basically two components here the tranjection coordinator that’s what we are doing
+
+and the microtex library, which links with their application.
+
+So you’re saying with the two components of this product transition coordinator this run SAGA microservice it actually is a microservice. 
+So basically, wherever you are deploying your microservice application, you deploy this transaction coordinator as well.
+
+And then Micro. Tx library here this is linked with the application so we provided one library for each programming language so there is one for Java one for no GS that is linked with the microservice.
+
+All the communication between microservices and transition coordinator this is using the rest API and among the microservice as whatever communication mechanism that you were using before you continue to use that we don’t impose anything in addition to that.
+
+And the transaction I, stored state, stored the transition coordinator need to estore the transection in state and that can be done in the TCD or orical database.
+
+So, with this product, basically, it reduces the application complexity significantly because now all the transition management burden is on this product rather than on the application developer. 
+Application developer doesn’t have to,
+
+I worry about the infrastructure for a distributed transaction it increases the develope of productivity. 
+And then all the transection protocols that we are supporting actually are industries tendered as you would see in the next slides
+
+obviously if developers is more productive though, there’s a faster time to market. 
+Now they are just focusing on the business logic rather than the transaction I. 
+And one salien point for this product is that you can continue to leverage your existing assets and development framework.
+
+There is no development framework that no new development framework that you need to use in order to make use of microts.
+
+So let’s talk about the tranjection protocols that we support for this spectrum of data consistency. 
+So the one protocol that we are supporting is x. 
+X has been around for decades actually it started from the main frame days then it went to the application services like tapedo and weave logic
+
+and now we are bringing it to the microservices world. 
+It’s a two phase commit protocol and it provides there strong consistency so either all the resources are updated or none of them are updated. 
+It maintains the acid properties and use of vaccine is mostly transparent to the application.
+
+And when I say mostly it means that you just how to use the transaction demarcation API in your application to demarcate which business logic you want part you want to be part of the global transection.
+
+Axa has been around four decades, as I said and it has been prove and it is used ten thousands, millions actually maybe billions of applications out there and it’s widely corrupted, of course.
+
+So what we provide for exe we have an exe compliant I. 
+We follow the exe spect as I said XA has coming from win flame and toxito and the blogic taxido we are from the taxido team we implemented exceport topsido and now we are bringing it to the Micro services world.
+
+In the jaw application, you just used the jpa apis to demarcate the application transactions and in type of step, we provide our own implementation of the API that we used for transition demarcation. 
+We have a very unique resource manager proxy approach that I’m going to talk in the next slide.
+
+And if you also support this logging last resource so using the logging last resource you can have one non exi compliant resource manager participate in the same global transaction along with other XA resources.
+
+Now our implementation is highly optimized actually especially for database but even for other database there are various things that we have done and you can expect higher throughput.
+
+So the unique resource manage approxy approach that I was talking about as of now most of the resource manager, or tranjection manager implementation requires that tranjection manager talks to the resource manager directly.
+
+And this means that the transaction manager needs to know about resource manager a specific libery it needs to link with those because it needs to call the accip repair taxi commit taxi role back API directly to the resource manager.
+
+That also means that the transaction manager needs to have a connection to each RM that are part of the transactions. 
+If you’re talking to 10 different RMS they are 10 connection.
+
+And these connections are, in addition to the application services, your microservices and of course, the transaction manager also needs to know what the credential are.
+
+Our implementation of transaction manager it’s completely agnostic of the resource manager. 
+We used the Micro service of your application that you are using as a proxy to the resource manager
+
+so whenever there is a time to call, actually prepared, commit and roll back we just talk to the resource man your microsurveys, as that, are provided as part of the microtex library.
+
+We recognized that these particular calls are for the resource manager and using the resource manager proxy we go to the resource manager and that way the transaction manager is not aware of exactly like which resource manager is being used by the microservice.
+
+We just talked to the microservice application
+
+there a couple of other distribution trevention protocols that we support. 
+One is the SAGA most of us are familiar. 
+Sagas have been around for quite some time as well cough these are generally used for the long running activities. 
+A typical use case there might be
+
+travel booking so you’re talking to a flight operator and a hotel operator and these operators might respond at different times which might be separated by minutes or even hours. 
+So, the accine protocol is not suitable for these kind of use case.
+
+So for that, we have this SAGA and we have implemented SAGA using the eclipse microprofile alare implementation
+
+a the vitsaga, the application developer, is responsible for providing this completion and compensating actions. 
+So they are saying like, okay if a transaction is completed these are the action these is the business logic to execute.
+
+And if for some reason, we have to compensate in the case that one transaction was locally committed, but the other one was not then this is the business logic to compensate that transaction for that particular resource.
+
+So there is a burden on the application developer to write this logic and make sure that these logics are operating correctly and test. 
+So another transection protocol that we support is try confirment cancel. 
+This is generally used for reservation patient model applications
+
+so something like the travel agent booking or even movie ticket booking seat bookings those kind of use cases are applicable to this. 
+This is a two phase commit protocol as well and it provides a strong consistency just like the axe protocol
+
+but the only thing I, the application has to adhere to this reservation in state model so I application must be able to say that yeah this is just reserved it’s not committed tranjection and if transection for some reason is cancelled then this reservation is about it or deservation is rewarded.
+
+As I mentioned that for sagas we implement acclist microbopile lares there are certain notations for jaoa those are provided in this respect. 
+And then for types skit we provide a notation equivalent hapis for tranjection demarcation for TCC those are very similar to lra simpl apis too.
+
+With that let me pass control to Brijesh and Brijesh is going to go or how simple it it could be to use Micro. 
+Tx in your application and use these apers
+
+thanks to part and as the pack already mentioned microtex provides an APP library that a microservice must used must use in the application code to interact with the transaction coordinator. 
+And the APP library provides several annotations and configuration that had the transaction support
+
+in the application code. 
+For the late NTCC transaction protocol the APP library uses request and response filters or interceptors to propagate the transaction context and for automatic
+
+an and listing of participants in a transaction. 
+This helps to hide the details of the communication between the coordinator and the participant and also among the participant microservices
+
+the changes that are required to use this APP library are very minimal and will be explained in the next few slides. 
+Let’s GOE to the next slide.
+
+You can develop your microservices in Java or type script and you can also use some of the widely used application development frameworks for Java and Norges like spring boat headed on with rosic silver or any synchronous less full application that is a jersy for rest
+
+and then express series framework for the types throug applications. 
+The APP library automatically propagates the transaction context when requests and responses are exchanged between participant microservices and the APP every has filters or interceptors that intercept an incoming request
+
+within a transaction context and automatically and lists a participant microservice with the transaction manager or or the coordinator. 
+The APP library simplifies the application development by providing the call back apis on a participant
+
+side which the transaction coordinator can later call to commit to roll back a transaction. 
+An having said that let’s investigate some example code to see that very minimal changes are required to use the APP library. 
+Let’s begin with xi so this is
+
+the x. I. Java. So in an exit transaction there are two types of participants. 
+So the first one is an initiator that initiates an exit transaction and then the other is a participant that participates in the exert transaction.
+
+So here the initiative application that initiates the extra transaction needs to only create at the transaction boundaries by creating an instance of trm user transaction and the transaction do begin called actually starts a new exit transaction which can be committed or rolled back by
+
+calling the commit or roll back on the transaction object which as shown in the highlighted text here let’s go to the next one. 
+So in the case of a participant microservice and the participant microservice microservice needs to first initialize the application library by providing and
+
+exa compliant data source which is usually a database which is shown here in the highlighted text. 
+Let’s go to the next one and then the APP library creates a and exit connection to the provider data source and inject that connection into the application code.
+
+And the same injected connection must be used to execute all DML queries by the application code so that is shown here in the highlighted text. 
+In the case of ellari in the case of lari participant Micro services in Java
+
+the lari annotation as defined in the eclipse Micro profile lare specifications must be used. 
+And the participant application annotates a jack sales resource method with the elari annotation a which actually determines whether the method will run in the context of an lari.
+
+And the participant application should also provide the other methods annotated with complete and compensate. 
+And these methods will be invoked when the elari is subsequently closed or compensated. 
+So that is what you can see in the highlighted text.
+
+Now, to ensure the transactional security with microtx the functionality is provided by the transaction coordinator can be used along with some of the functionalities that a service mess provides.
+
+For example, mutual TLS provided by a service mess can be used for all traffic between microservices and the transaction coordinator. 
+Similarly, GWT tokens can be used for user authentication. 
+This has been tested with some widely used identity providers
+
+and then the transition token provided by the coordinator can be used for user authorization. 
+And similarly, credentials can be shared using doctor or cubanity secrets. 
+Let’s go to the next one.
+
+The microtx quick start guide helps to quickly deploy the transaction coordinator and the sample application and then run xalar the NTCC transactions to understand how micropx works.
+
+And then there are out of the box sample applications which are actually example applications covering several use cases using xalate NTCC protocols that show how the APP library and microservices can be used. 
+Yeah so with that we come to the end of this session.
+
+Okay thank you for this. 
+So let’s talk about the interruptive legal and deployment options that we have for micropx. 
+Let’s first go into deployment. 
+As I said that the tranjection coordinator which is part of Micro Tx itself is a, Micro service.
+
+So wherever you’re deploying your microservices application this transaction coordinator can also be deployed m and the all we need actually from the infrastructure is and ole network and the request router or load balancer for all these rest API communication.
+
+So cubanites of course is a, very good infrastructure out there and most of the microservices are using it so we support cubanites for leak along with the service mess they are certified with the steal service mess and any proxy it can work with the doctor suam as well.
+
+And microtx is also natively integrated with the commanitis ecosystem all the tools which are there in the communities ecosystem like tarle and promethius gefana for monitoring for Elk Fk stake for logging and zagar and so on.
+
+We also provided out of the box hand chart for deployment of microtex and life cycle management. 
+As far as the resource managers are concerned we support a, wide variety of resource managers. 
+Here for lett first talk about the aca compliance compliant resource manager
+
+and for Java application is specifically any GDBC driver that implements axi data source and AI resource I. 
+Microtex will work with that and so we have tested this with database article data base of course and then post grassed all as well as my cequall.
+
+And you should also work with other RMS such as Microsoft as skill Serer and Tv2. 
+Not only that actually Micro Tx can also work with ortical Blockchain platform which provides an xcarm of its own. 
+So now you can have a
+
+Blockchain distributed leasure update in the same exit transection as an orical database or some other database and all that can be part of the same global transection. 
+For no GS application we need to have a acy compliant DV driver that the resource manager should troy.
+
+Now we have one four orical database and we have testored that as I mentioned earlier that we also support logging last resource or LLR feature using which you can include one non exic compliant resource marien in an exit conjection.
+
+And and so basically any non ex ray compliant resource manager can be used. 
+We have test traded with mongol tv for lre and TCC protocols. 
+Resource manager microta resource manager agnostic you can use any resource manager out
+
+so Wwe talked about that like number of variety of resource manage that can be part of the same global transaction especially the XA part of I. 
+You can have a Java script and Java application talking to many different resource managers and even including a Blockchain platform
+
+but there might be a need to use or include other applications into this. 
+So taxido is one of them. 
+Taxido has been around for 30, 40 years and a thousands of mission critical applications which are written in CC plus plus or cobol those are running in tacito.
+
+So now you can include a taxido service which is written in these languages in a acate transition coordinated by Micro. 
+Tx. And not only that, you can also have a database application
+
+and that you can access using ords and pex and ex APP written in PLSQ and maybe be part of the same x a global tranjection and all the protocol as le from transition coordinator to these existing application is using leskp.
+
+So this is the overall architecture for the product everything put together here we have the transection coordinator running as a microservice in cubanity’s cluster. 
+You could have a variety of applications including no ges microservice Java microservice taxido
+
+could also be running in cover its and database through our DSPX. 
+AP could also be running within that database. 
+And on the resource manager side, you could have that database regulate converge database and Blockchain platform as resources,
+
+as well as other risk sources. 
+And all this is integrated into cubanity’s ecosystem especially tun voy as a service mash and proxy and then various tools for monitoring from mithias karni and so on.
+
+So let’s look at the road map and upcoming feature but before we go into that how we are launching this product so this transection manager for microservice is free
+
+this is available now this is the first time we are announcing at the cloud world this product is available for you to download and play with. 
+This is focused on developers to get to started quickly and we start developing transection applications for most use cases.
+
+This is completele free product no licensing cost whatsoever. 
+You can also get support from article if you have support for some existing products like artical database orical tracido or Blockchain platform
+
+then we are also working on this enterprise edition of this product. 
+This is going to be for production deployment and it would have new features like high avalability and a extreme performance and escalability etc. 
+And for advanced use cases s
+
+and then we are also looking into providing an oci specific sku mostly for pay per use pricing since it could be deployed in cloud you should be able to pay based on your uses on
+
+it comma what is the difference between free version and enterprise edition? So the number of transactions that you can do in an hour with free, that’s limited to 4,800 with enterprisation is unlimited.
+
+And I mentioned that availability and resiliency are going to be higher in the enterprise edition compared to the same thing with the optimization
+
+as far as the roadmap is concerned we have quite a few features in the current release we are looking at to expand that with the introduction of python and gollang as the programming language for developing microservices and support for larc. 
+And larc,
+
+it’s basically it will allow us to enable the interoperability with etherium Blockchain and then high availability and a scalability features more database optimizations as well as life cycle management features like a console to manage the product cobanites operator
+
+and certification with other products other platforms for other application development platforms.
+
+So with that, we hare come to the end of this presentation and I want to leave you with the slide on how to get it started with the product if you want to play with this and we invite you to play with this product and see how it fits into your use case,
+
+into your architecture. 
+There are quite a few collaterals that are available on our website at articlecom on that you can avail. 
+So there’s quicky start guided data sheets blog articles are there white paper and there’s a live lab also available now
+
+a that you can play with the product it has everything set up in the product in the live lab already there is also a community support. 
+So if you have any questions, or do you have any comment or feedback you can use this community support for them to provide us with your feedback.
+
+So with that, let me just thank you again for joining us at artical cloud word and listening to this presentation about ortical transection manager for microservices. 
+Thank you.
